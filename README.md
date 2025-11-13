@@ -20,7 +20,9 @@ Dự án này tập trung vào việc xây dựng một pipeline xử lý dữ l
 - **Tích hợp dữ liệu (Data Integration)**: Tải và chuyển đổi dữ liệu thô từ UCI về định dạng CSV
 - **Làm sạch dữ liệu (Data Cleaning)**: Xử lý missing values, validate dữ liệu, loại bỏ outliers và duplicates
 - **Chuẩn bị dữ liệu**: Chọn lọc các thuộc tính quan trọng cho mô hình dự đoán nguy cơ nhồi máu cơ tim
-
+- **Trực quan hóa dữ liệu(Data Visualization)**: Sử dụng các biểu đồ để hiểu rõ hơn về phân phối và mối quan hệ giữa các biến
+- **Chuyển đổi dữ liệu (Data Transformation)**: Chuẩn hóa và mã hóa các biến để phù hợp với các thuật toán machine learning
+- **Giảm chiều dữ liệu (Dimensionality Reduction)**: Áp dụng các kỹ thuật như Feature Selection và PCA để giảm số lượng biến đầu vào, giúp tăng hiệu quả và độ chính xác của mô hình
 ## ✨ Tính năng
 
 ### Data Integration
@@ -43,6 +45,21 @@ Dự án này tập trung vào việc xây dựng một pipeline xử lý dữ l
   - Chuyển đổi bài toán đa lớp thành nhị phân (num: 0/1)
 
 - **Loại bỏ trùng lặp**: Tự động phát hiện và xóa các bản ghi trùng lặp
+## Data Visualization
+- **So sánh Missing Values**: Trực quan hóa tỉ lệ missing trước và sau khi xử lý.
+- **Phân phối dữ liệu**: Vẽ biểu đồ (KDE, Countplot) cho dữ liệu sau khi clean.
+- **Kiểm tra Outliers**: Dùng boxplot để xác nhận outliers đã được xử lý.
+- **Ma trận tương quan**: Phân tích mối quan hệ giữa các biến sau khi clean.
+
+### Data Transformation
+- **Feature Construction**: Tạo các thuộc tính mới có ý nghĩa lâm sàng (ví dụ: `high_chol_flag`, `age_binned`).
+- **Categorical Encoding**: Tự động mã hóa One-Hot cho các cột phân loại (ví dụ: `cp`, `thal`, `slope`).
+- **Standardization**: Áp dụng Z-score scaling (StandardScaler) cho các cột số liên tục.
+
+### Data Reduction
+- **Feature Selection (Filter)**: Tự động lọc và giữ lại các thuộc tính có tương quan cao với biến mục tiêu.
+- **Feature Selection (Embedded)**: Dùng Random Forest Feature Importance để chọn ra các thuộc tính quan trọng nhất.
+- **PCA (Principal Component Analysis)**: Nén bộ dữ liệu xuống còn ít chiều hơn mà vẫn giữ lại 95% thông tin (phương sai).
 
 ## 📁 Cấu trúc dự án
 
@@ -64,6 +81,14 @@ DataMining_251/
         ├── new.data                 # File dữ liệu thô từ UCI
         └── to_csv/
             └── raw_heart_disease.csv # File CSV đã chuyển đổi
+    ├── visualization/
+    │   └── visualization.py         # Module trực quan hóa dữ liệu
+    │
+    ├── Tranformation/
+    │   └── tranformation.py         # Module chuyển đổi dữ liệu
+    │
+    └── Reduction/
+        └── reduction.py             # Module giảm chiều dữ liệu
 ```
 
 ## 🚀 Cài đặt
@@ -152,6 +177,37 @@ df, duplicate_stats = remove_duplicates(df)
 # Lưu dữ liệu đã làm sạch
 df.to_csv('Process/Cleaned_data/cleaned_heart_disease.csv', index=False)
 ```
+#### Data Visualization
+```python
+import Process.visualization.visualization as viz
+import pandas as pd
+# Đọc dữ liệu đã 
+df = pd.read_csv('Process/Raw_data/to_csv/raw_heart_disease.csv')
+df_clean = pd.read_csv('Process/Cleaned_data/cleaned_heart_disease.csv')
+# Vẽ biểu đồ phân phối dữ liệu
+viz.run_visualizations(df, df_clean, continuous_cols=['age', 'trestbps', 'chol', 'thalach', 'oldpeak'], categorical_cols=['sex', 'cp', 'thal', 'slope', 'restecg', 'htn', 'dm', 'famhist', 'fbs'])
+```
+#### Data Transformation
+```python
+import Process.Tranformation.tranformation as trans
+import pandas as pd
+# Đọc dữ liệu đã làm sạch
+df_clean = pd.read_csv('Process/Cleaned_data/cleaned_heart_disease.csv')
+# Chạy pipeline chuyển đổi dữ liệu
+df_transformed = trans.run_transformation_pipeline(df_clean)
+# Lưu dữ liệu đã chuyển đổi
+df_transformed.to_csv('Process/Transformed_data/transformed_heart_disease.csv', index=False)
+```
+#### Data Reduction
+```python
+import Process.Reduction.reduction as red
+import pandas as pd
+# Đọc dữ liệu đã chuyển đổi
+df_transformed = pd.read_csv('Process/Transformed_data/transformed_heart_disease.csv')
+# Chạy pipeline giảm chiều dữ liệu
+red.run_reduction_pipeline(df_transformed, target_col='num')
+```
+
 
 ## 📦 Dependencies
 
@@ -222,6 +278,40 @@ Raw CSV
     ↓
 Cleaned Data (sẵn sàng cho ML)
 ```
+#### Data Visualization
+```
+Cleaned Data
+    ↓
+[Trực quan hóa]
+    ├── So sánh Missing Values
+    ├── Phân phối dữ liệu
+    ├── Kiểm tra Outliers
+    └── Ma trận tương quan
+```
+### 3. Data Transformation Pipeline
+```
+Cleaned Data
+    ↓
+[Feature Construction]
+    ↓
+[Categorical Encoding (One-Hot)]
+    ↓
+[Standardization (Z-score)] 
+    ↓
+Transformed Data (sẵn sàng cho Reduction)
+```
+### 4. Data Reduction Pipeline
+```
+Transformed Data
+    ↓
+[Feature Selection (Filter)]
+    ↓
+[Feature Selection (Embedded)]
+    ↓
+[PCA (Principal Component Analysis)]
+    ↓
+Reduced Data (sẵn sàng cho Modeling)
+``` 
 
 ## 📝 Ghi chú
 
