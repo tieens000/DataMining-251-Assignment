@@ -23,6 +23,7 @@ Dự án này tập trung vào việc xây dựng một pipeline xử lý dữ l
 - **Trực quan hóa dữ liệu(Data Visualization)**: Sử dụng các biểu đồ để hiểu rõ hơn về phân phối và mối quan hệ giữa các biến
 - **Chuyển đổi dữ liệu (Data Transformation)**: Chuẩn hóa và mã hóa các biến để phù hợp với các thuật toán machine learning
 - **Giảm chiều dữ liệu (Dimensionality Reduction)**: Áp dụng các kỹ thuật như Feature Selection và PCA để giảm số lượng biến đầu vào, giúp tăng hiệu quả và độ chính xác của mô hình
+- **Mô hình hóa (Modeling)**: Xây dựng và huấn luyện mô hình Random Forest trên 3 bộ dữ liệu đã giảm chiều, đánh giá và so sánh hiệu suất để chọn phương pháp tối ưu
 ## ✨ Tính năng
 
 ### Data Integration
@@ -45,7 +46,8 @@ Dự án này tập trung vào việc xây dựng một pipeline xử lý dữ l
   - Chuyển đổi bài toán đa lớp thành nhị phân (num: 0/1)
 
 - **Loại bỏ trùng lặp**: Tự động phát hiện và xóa các bản ghi trùng lặp
-## Data Visualization
+
+### Data Visualization
 - **So sánh Missing Values**: Trực quan hóa tỉ lệ missing trước và sau khi xử lý.
 - **Phân phối dữ liệu**: Vẽ biểu đồ (KDE, Countplot) cho dữ liệu sau khi clean.
 - **Kiểm tra Outliers**: Dùng boxplot để xác nhận outliers đã được xử lý.
@@ -61,6 +63,13 @@ Dự án này tập trung vào việc xây dựng một pipeline xử lý dữ l
 - **Feature Selection (Embedded)**: Dùng Random Forest Feature Importance để chọn ra các thuộc tính quan trọng nhất.
 - **PCA (Principal Component Analysis)**: Nén bộ dữ liệu xuống còn ít chiều hơn mà vẫn giữ lại 95% thông tin (phương sai).
 
+### Modeling
+- **Multi-Method Training**: Huấn luyện mô hình Random Forest trên 3 bộ dữ liệu đã giảm chiều (FILTERED, EMBEDDED, PCA).
+- **Model Evaluation**: Đánh giá chi tiết với các metrics (Accuracy, Precision, Recall, F1-Score, ROC-AUC).
+- **Prediction Pipeline**: Dự đoán và đánh giá mô hình trên tập test với báo cáo kết quả đầy đủ.
+- **Comparison Framework**: So sánh hiệu suất giữa 3 phương pháp giảm chiều để chọn mô hình tối ưu.
+- **Visualization**: Tự động tạo biểu đồ confusion matrix, ROC curve, feature importance cho từng phương pháp.
+
 ## 📁 Cấu trúc dự án
 
 ```
@@ -70,25 +79,73 @@ DataMining_251/
 ├── README.md                        # Tài liệu dự án
 ├── requirements.txt                 # Danh sách các thư viện cần thiết
 │
-└── Process/
-    ├── Integration/
-    │   └── Data_integration.py      # Module tích hợp dữ liệu
+├── Process/                         # Thư mục xử lý dữ liệu
+│   ├── Integration/
+│   │   └── Data_integration.py      # Module tích hợp dữ liệu
+│   │
+│   ├── Cleaning/
+│   │   └── Data_cleaning.py         # Module làm sạch dữ liệu
+│   │
+│   ├── visualization/
+│   │   └── visualization.py         # Module trực quan hóa dữ liệu
+│   │
+│   ├── Tranformation/
+│   │   └── tranformation.py         # Module chuyển đổi dữ liệu
+│   │
+│   ├── Reduction/
+│   │   └── reduction.py             # Module giảm chiều dữ liệu
+│   │
+│   ├── Raw_data/
+│   │   ├── new.data                 # File dữ liệu thô từ UCI
+│   │   └── to_csv/
+│   │       └── raw_heart_disease.csv # File CSV đã chuyển đổi
+│   │
+│   ├── Cleaned_data/
+│   │   └── cleaned_heart_disease.csv # Dữ liệu đã làm sạch
+│   │
+│   ├── Transformed_data/
+│   │   └── transformed_heart_disease.csv # Dữ liệu đã chuyển đổi
+│   │
+│   └── Reduced_data/
+│       ├── reduced_heart_disease_FILTERED.csv  # Dữ liệu sau Filter
+│       ├── reduced_heart_disease_EMBEDDED.csv  # Dữ liệu sau Embedded
+│       └── reduced_heart_disease_PCA.csv       # Dữ liệu sau PCA
+│
+└── Modeling/                        # Thư mục mô hình hóa
+    ├── train_FILTERED.py            # Training với Filter method
+    ├── train_EMBEDDED.py            # Training với Embedded method
+    ├── train_PCA.py                 # Training với PCA method
     │
-    ├── Cleaning/
-    │   └── Data_cleaning.py         # Module làm sạch dữ liệu
+    ├── predict_FILTERED.py          # Prediction với Filter model
+    ├── predict_EMBEDDED.py          # Prediction với Embedded model
+    ├── predict_PCA.py               # Prediction với PCA model
     │
-    └── Raw_data/
-        ├── new.data                 # File dữ liệu thô từ UCI
-        └── to_csv/
-            └── raw_heart_disease.csv # File CSV đã chuyển đổi
-    ├── visualization/
-    │   └── visualization.py         # Module trực quan hóa dữ liệu
+    ├── compare_reduction_methods.py # So sánh 3 phương pháp
     │
-    ├── Tranformation/
-    │   └── tranformation.py         # Module chuyển đổi dữ liệu
+    ├── Data/                        # Dữ liệu train/test đã split
+    │   ├── train_FILTERED/
+    │   ├── train_EMBEDDED/
+    │   ├── train_PCA/
+    │   ├── test_FILTERED/
+    │   ├── test_EMBEDDED/
+    │   └── test_PCA/
     │
-    └── Reduction/
-        └── reduction.py             # Module giảm chiều dữ liệu
+    ├── Models/                      # Các mô hình đã huấn luyện
+    │   ├── FILTERED/
+    │   ├── EMBEDDED/
+    │   └── PCA/
+    │
+    └── Results/                     # Kết quả đánh giá và so sánh
+        ├── FILTERED/
+        │   ├── Training/            # Kết quả training
+        │   └── Predictions/         # Kết quả prediction
+        ├── EMBEDDED/
+        │   ├── Training/
+        │   └── Predictions/
+        ├── PCA/
+        │   ├── Training/
+        │   └── Predictions/
+        └── Comparison/              # So sánh tổng hợp
 ```
 
 ## 🚀 Cài đặt
@@ -208,6 +265,40 @@ df_transformed = pd.read_csv('Process/Transformed_data/transformed_heart_disease
 red.run_reduction_pipeline(df_transformed, target_col='num')
 ```
 
+#### Modeling
+
+##### Training Models
+```python
+# Training với 3 phương pháp giảm chiều
+# Method 1: Filter Method
+python Modeling/train_FILTERED.py
+
+# Method 2: Embedded Method
+python Modeling/train_EMBEDDED.py
+
+# Method 3: PCA Method
+python Modeling/train_PCA.py
+```
+
+##### Making Predictions
+```python
+# Prediction với các mô hình đã train
+# Prediction với Filter model
+python Modeling/predict_FILTERED.py
+
+# Prediction với Embedded model
+python Modeling/predict_EMBEDDED.py
+
+# Prediction với PCA model
+python Modeling/predict_PCA.py
+```
+
+##### Comparing Methods
+```python
+# So sánh hiệu suất của 3 phương pháp
+python Modeling/compare_reduction_methods.py
+```
+
 
 ## 📦 Dependencies
 
@@ -222,6 +313,7 @@ Các thư viện chính được sử dụng trong dự án:
 - **plotly** (>=5.0.0): Biểu đồ tương tác
 - **jupyter** (>=1.0.0): Môi trường notebook
 - **requests**: Tải dữ liệu từ web (được sử dụng trong Data_integration.py)
+- **joblib**: Lưu và load các mô hình machine learning (được sử dụng trong Modeling)
 
 ## 📊 Nguồn dữ liệu
 
@@ -311,13 +403,42 @@ Transformed Data
 [PCA (Principal Component Analysis)]
     ↓
 Reduced Data (sẵn sàng cho Modeling)
+```
+
+### 5. Modeling Pipeline
+```
+Reduced Data (3 datasets)
+    ↓
+[Train-Test Split 80-20]
+    ↓
+[Training Random Forest Models]
+    ├── FILTERED Dataset → RF Model
+    ├── EMBEDDED Dataset → RF Model
+    └── PCA Dataset → RF Model
+    ↓
+[Model Evaluation]
+    ├── Accuracy, Precision, Recall, F1-Score
+    ├── Confusion Matrix
+    ├── ROC-AUC Score
+    └── Feature/Component Importance
+    ↓
+[Prediction on Test Set]
+    ↓
+[Comparison & Analysis]
+    ├── Performance Metrics Comparison
+    ├── Trade-off Analysis (Features vs Accuracy)
+    └── Best Model Selection
+    ↓
+Final Results & Visualizations
 ``` 
 
 ## 📝 Ghi chú
 
-- Dự án được thiết kế để dễ dàng mở rộng với các module mới (như Data Transformation, Feature Engineering, Modeling)
+- Dự án được thiết kế để dễ dàng mở rộng với các module mới
 - Tất cả các đường dẫn được quản lý tự động, đảm bảo tính nhất quán
 - Code được viết với nhiều comment và thông báo để dễ theo dõi quá trình xử lý
+- Pipeline đầy đủ: Data Integration → Cleaning → Visualization → Transformation → Reduction → Modeling
+- Kết quả modeling được lưu có tổ chức theo từng phương pháp giảm chiều để dễ dàng so sánh và phân tích
 
 ## 👤 Tác giả
 

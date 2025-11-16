@@ -1,0 +1,63 @@
+Patient_ID,Actual,Actual_Label,Predicted,Predicted_Label,Correct,Probability_Disease
+1,0,No Disease,1,Disease,False,0.6510753362290802
+2,0,No Disease,0,No Disease,True,0.1289243837365969
+3,0,No Disease,0,No Disease,True,0.23142537231141677
+4,0,No Disease,0,No Disease,True,0.4329492948564823
+5,0,No Disease,0,No Disease,True,0.09496191993745494
+6,1,Disease,1,Disease,True,0.9659653458364558
+7,0,No Disease,0,No Disease,True,0.07997291905020004
+8,1,Disease,1,Disease,True,0.5999151629260102
+9,1,Disease,1,Disease,True,0.9694100030100686
+10,1,Disease,1,Disease,True,0.8896321458747016
+11,1,Disease,0,No Disease,False,0.4850551424054792
+12,1,Disease,1,Disease,True,0.8789270604125903
+13,0,No Disease,1,Disease,False,0.6040317633267567
+14,0,No Disease,0,No Disease,True,0.3470612994697857
+15,1,Disease,1,Disease,True,0.9685224169809232
+16,1,Disease,0,No Disease,False,0.38932550717379044
+17,0,No Disease,0,No Disease,True,0.29742902564738605
+18,1,Disease,1,Disease,True,0.8759122187646564
+19,0,No Disease,0,No Disease,True,0.28797340936616933
+20,0,No Disease,0,No Disease,True,0.4153584830490853
+21,0,No Disease,0,No Disease,True,0.22290816785456524
+22,0,No Disease,0,No Disease,True,0.1373969993821196
+23,0,No Disease,0,No Disease,True,0.21931769709024923
+24,0,No Disease,1,Disease,False,0.5082144394269028
+25,0,No Disease,0,No Disease,True,0.28923316701349705
+26,0,No Disease,0,No Disease,True,0.3053411702090357
+27,1,Disease,0,No Disease,False,0.33532833972548365
+28,1,Disease,1,Disease,True,0.7924484812650074
+29,0,No Disease,0,No Disease,True,0.3399238222183916
+30,0,No Disease,0,No Disease,True,0.29072440586137505
+31,0,No Disease,0,No Disease,True,0.10487715490235856
+32,0,No Disease,0,No Disease,True,0.16281171505214956
+33,1,Disease,1,Disease,True,0.7680781806908153
+34,1,Disease,1,Disease,True,0.7442824214166397
+35,1,Disease,1,Disease,True,0.7816754710401942
+36,0,No Disease,0,No Disease,True,0.35781057125742827
+37,1,Disease,1,Disease,True,0.529168467967932
+38,0,No Disease,0,No Disease,True,0.48968558589149835
+39,1,Disease,1,Disease,True,0.7343414541195155
+40,0,No Disease,0,No Disease,True,0.27134840105502045
+41,0,No Disease,1,Disease,False,0.8019319902361768
+42,0,No Disease,1,Disease,False,0.6358215878684547
+43,1,Disease,1,Disease,True,0.7589395377740549
+44,1,Disease,1,Disease,True,0.8873092763541317
+45,0,No Disease,0,No Disease,True,0.05502383604547242
+46,1,Disease,1,Disease,True,0.8724455279506422
+47,0,No Disease,1,Disease,False,0.5237430487705831
+48,0,No Disease,0,No Disease,True,0.16026527259554033
+49,1,Disease,1,Disease,True,0.6567892032144316
+50,1,Disease,1,Disease,True,0.659807091311037
+51,0,No Disease,0,No Disease,True,0.4369984265009363
+52,1,Disease,1,Disease,True,0.830703031792552
+53,0,No Disease,0,No Disease,True,0.1494550764555408
+54,1,Disease,1,Disease,True,0.782976380132508
+55,1,Disease,1,Disease,True,0.5958846044222484
+56,0,No Disease,0,No Disease,True,0.2320849436122356
+57,1,Disease,1,Disease,True,0.7567711377940844
+58,1,Disease,1,Disease,True,0.9577489227725331
+59,1,Disease,1,Disease,True,0.7510249088551801
+60,1,Disease,1,Disease,True,0.9168381624729852
+61,1,Disease,1,Disease,True,0.8190080580971028
+62,0,No Disease,0,No Disease,True,0.2984197147684096

@@ -1,0 +1,2 @@
+Method,Description,Features,Train_Accuracy,Test_Accuracy,Test_Precision,Test_Recall,Test_F1,Test_AUC
+FILTERED,Filter Method (Correlation-based),14,0.9065040650406504,0.8548387096774194,0.8125,0.896551724137931,0.8524590163934426,0.9446185997910136

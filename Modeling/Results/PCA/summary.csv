@@ -1,0 +1,2 @@
+Method,Description,Features,Train_Accuracy,Test_Accuracy,Test_Precision,Test_Recall,Test_F1,Test_AUC
+PCA,Principal Component Analysis (95% Variance),20,0.9878048780487805,0.9193548387096774,0.9,0.9310344827586207,0.9152542372881356,0.9268547544409613
